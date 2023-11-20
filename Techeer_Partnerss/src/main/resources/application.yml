@@ -1,0 +1,9 @@
+server:
+  port: 8016
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs # SpringDoc? API ?? ?? ?? ??
+  swagger-ui:
+    path: /swagger-ui/index.html # SpringDoc? Swagger UI ?? ??
+
