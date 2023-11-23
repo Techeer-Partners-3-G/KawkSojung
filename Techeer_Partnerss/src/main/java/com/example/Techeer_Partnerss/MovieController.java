@@ -3,6 +3,7 @@ package com.example.Techeer_Partnerss;
 import com.example.Techeer_Partnerss.dto.MovieDTO;
 import com.example.Techeer_Partnerss.model.Movie;
 import com.example.Techeer_Partnerss.enums.Genre;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
@@ -28,5 +29,20 @@ public class MovieController {
         Movie movie = movieService.createMovie(movieDTO.getGenre(), movieDTO);
         return new ResponseEntity<>(movie, HttpStatus.CREATED);
     }
+
+    @GetMapping("/{id}")
+    @Operation(summary = "단일 영화 조회", description = "단일 영화 조회하기 위한 상세 정보")
+    public ResponseEntity<MovieDTO> getMovieById(
+            @Parameter(description = "조회할 영화의 ID", required = true) @PathVariable Long id) {
+
+        try {
+            MovieDTO movieDTO = movieService.getMovieById(id);
+            return ResponseEntity.ok(movieDTO);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
 
 }
