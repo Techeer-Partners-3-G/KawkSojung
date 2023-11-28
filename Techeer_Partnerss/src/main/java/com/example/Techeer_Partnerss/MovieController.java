@@ -11,6 +11,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/movies")
 public class MovieController {
@@ -43,6 +45,14 @@ public class MovieController {
         }
     }
 
+    @GetMapping("/all")
+    @Operation(summary = "영화 목록 조회", description = "전체 영화 목록을 조회하거나, 장르나 상영 여부 조건으로 필터링하여 조회")
+    public ResponseEntity<List<MovieDTO>>getMovies(
+            @Parameter(description = "필터링할 장르") @RequestParam(required = false) Genre genre,
+            @Parameter(description = "현재 상영중인 영화만 조회할 지 여부") @RequestParam(required = false) Boolean isShowing) {
 
+        List<MovieDTO> movies = movieService.getMovies(genre, isShowing);
+        return ResponseEntity.ok(movies);
+    }
 
 }

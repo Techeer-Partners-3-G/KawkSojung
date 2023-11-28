@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class MovieService {
@@ -59,6 +61,31 @@ public class MovieService {
         return movieDTO;
     }
 
+    //영화목록 조회
+    public List<MovieDTO> getMovies(Genre genre, Boolean isShowing) {
+        // 모든 영화를 가져온 다음 스트림으로 필터링합니다.
+        Stream<Movie> movieStream = movieRepository.findAll().stream();
+
+        if (genre != null) {
+            movieStream = movieStream.filter(movie -> movie.getGenre().equals(genre.toString()));
+        }
+        if (isShowing != null) {
+            movieStream = movieStream.filter(movie -> movie.isShowing() == isShowing);
+        }
+
+        return movieStream
+                .sorted(Comparator.comparing(Movie::getReleaseDate)) // 개봉일 순으로 정렬
+                .map(this::convertToMovieDTO)
+                .collect(Collectors.toList());
+    }
+    private MovieDTO convertToMovieDTO(Movie movie) {
+        MovieDTO movieDTO = new MovieDTO();
+        movieDTO.setTitle(movie.getTitle());
+        movieDTO.setReleaseDate(movie.getReleaseDate());
+        movieDTO.setEndDate(movie.getEndDate());
+        movieDTO.setGenre(Genre.valueOf(movie.getGenre()));
+        return movieDTO;
+    }
 
 
 }
