@@ -29,4 +29,18 @@ public class MovieController {
         return new ResponseEntity<>(movie, HttpStatus.CREATED);
     }
 
+    //수정하는 메서드
+    @PutMapping("/{id}")
+    @Operation(summary = "영화 정보 수정", description = "기존 영화 정보 수정.")
+    public ResponseEntity<Movie> updateMovie( @Parameter(description = "수정할 영화의 ID", required = true) @PathVariable Long id,
+                                              @Parameter(description = "업데이트할 영화 정보", required = true) @RequestBody MovieDTO updateMovieDTO,
+                                              @Parameter(description = "장르 정보", required = true) @RequestParam(required = false) Genre genre){
+        Movie updatedMovie = movieService.updateMovie(id, updateMovieDTO,genre);
+        if(updatedMovie != null){
+            return new ResponseEntity<>(updatedMovie, HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
 }

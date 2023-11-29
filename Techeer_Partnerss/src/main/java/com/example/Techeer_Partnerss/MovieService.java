@@ -36,6 +36,29 @@ public class MovieService {
         return movieRepository.save(movie);
     }
 
+    public Movie updateMovie(Long movieId, MovieDTO updateMovieDTO, Genre genre){
+        // 해당 ID로 영화를 찾음
+        Movie movieToUpdate = movieRepository.findById(movieId)
+                .orElseThrow(() -> new IllegalArgumentException("Movie not found"));
+
+        // 업데이트할 정보가 있는 경우에만 업데이트 수행
+        if (updateMovieDTO.getTitle() != null){
+            movieToUpdate.setTitle(updateMovieDTO.getTitle());
+        }
+        if (updateMovieDTO.getReleaseDate() != null){
+            movieToUpdate.setReleaseDate(updateMovieDTO.getReleaseDate());
+        }
+        if(updateMovieDTO.getEndDate() != null){
+            movieToUpdate.setEndDate(updateMovieDTO.getEndDate());
+            movieToUpdate.setShowing(movieToUpdate.getEndDate()!= null && movieToUpdate.getEndDate().isAfter(LocalDate.now()));
+        }
+        if(genre != null){
+            movieToUpdate.setGenre(genre.toString());
+        }
+
+        return movieRepository.save(movieToUpdate);
+    }
+
     // 상영 중인 영화를 반환하는 메서드
     public List<Movie> getShowingMovies() {
         return movieRepository.findAll().stream()
