@@ -1,11 +1,15 @@
 package com.example.Techeer_Partnerss.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
 
-@Entity  // JPA에서 엔티티 클래스임을 나타내고, 데이터베이스의 테이블과 매핑이 됨.
+
+
+@Data
+@Entity
 public class Movie {
     @Id // 해당 필드가 엔티티의 기본 키(primary key)임을 나타냄.
     /*@GeneratedValue : 기본 키의 값을 자동으로 생성하는 방법 지정.
@@ -31,59 +35,5 @@ public class Movie {
     @Column(nullable = false, updatable = false)
     private LocalDate createdDate;
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getGenre() {
-        return genre;
-    }
-
-    public void setGenre(String genre) {
-        this.genre = genre;
-    }
-
-    public LocalDate getReleaseDate() {
-        return releaseDate;
-    }
-
-    public void setReleaseDate(LocalDate releaseDate) {
-        this.releaseDate = releaseDate;
-    }
-
-    public LocalDate getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
-    }
-
-    public boolean isShowing() {
-        return isShowing;
-    }
-
-    public void setShowing(boolean showing) {
-        isShowing = showing;
-    }
-
-    public LocalDate getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(LocalDate createdDate) {
-        this.createdDate = createdDate;
-    }
 }

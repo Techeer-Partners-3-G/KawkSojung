@@ -4,6 +4,7 @@ import com.example.Techeer_Partnerss.dto.MovieDTO;
 import com.example.Techeer_Partnerss.enums.Genre;
 import com.example.Techeer_Partnerss.model.Movie;
 import com.example.Techeer_Partnerss.repository.MovieRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -65,4 +66,22 @@ public class MovieService {
                 .filter(movie -> movie.getEndDate() != null && movie.getEndDate().isAfter(LocalDate.now()))
                 .collect(Collectors.toList());
     }
+
+
+    public MovieDTO getMovieById(Long id) {
+        Movie movie = movieRepository.findById(id).orElseThrow(() ->
+                new EntityNotFoundException("Movie not found with id : " + id));
+
+        MovieDTO movieDTO = new MovieDTO();
+
+        movieDTO.setTitle(movie.getTitle());
+        movieDTO.setReleaseDate(movie.getReleaseDate());
+        movieDTO.setEndDate(movie.getEndDate());
+        movieDTO.setGenre(Genre.valueOf(movie.getGenre()));
+
+        return movieDTO;
+    }
+
+
+
 }
