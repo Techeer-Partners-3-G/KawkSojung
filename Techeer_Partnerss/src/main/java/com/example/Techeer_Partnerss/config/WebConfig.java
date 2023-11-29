@@ -13,6 +13,7 @@ public class WebConfig {
 
     @Bean
     public OpenAPI api() {
+        //
         Info info = new Info()
                 .title("Techeer Partners API")
                 .version("v1")
