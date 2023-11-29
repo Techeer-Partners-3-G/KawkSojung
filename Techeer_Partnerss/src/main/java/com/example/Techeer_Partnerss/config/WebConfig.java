@@ -17,7 +17,7 @@ public class WebConfig {
                 .title("Techeer Partners API")
                 .version("v1")
                 .description("API Documentation for Techeer Partners");
-
+//수정해봄
         return new OpenAPI().components(new Components()).info(info);
     }
 }
