@@ -43,13 +43,13 @@ public class MovieService {
                 .orElseThrow(() -> new IllegalArgumentException("Movie not found"));
 
         // 업데이트할 정보가 있는 경우에만 업데이트 수행
-        if (updateMovieDTO.getTitle() != null){
+        if (updateMovieDTO.getTitle() != null){//영화제목
             movieToUpdate.setTitle(updateMovieDTO.getTitle());
         }
-        if (updateMovieDTO.getReleaseDate() != null){
+        if (updateMovieDTO.getReleaseDate() != null){//개봉날짜
             movieToUpdate.setReleaseDate(updateMovieDTO.getReleaseDate());
         }
-        if(updateMovieDTO.getEndDate() != null){
+        if(updateMovieDTO.getEndDate() != null){//종영날짜
             movieToUpdate.setEndDate(updateMovieDTO.getEndDate());
             movieToUpdate.setShowing(movieToUpdate.getEndDate()!= null && movieToUpdate.getEndDate().isAfter(LocalDate.now()));
         }
